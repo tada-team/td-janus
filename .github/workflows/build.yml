@@ -36,6 +36,14 @@ jobs:
           mkdir -p dist
           mv td-janus_${{env.version}}.deb dist
           ls -lah dist
+      - name: Try install
+        working-directory: dist
+        run: |
+          curl -s --compressed "https://tada-team.github.io/ppa/KEY.gpg" | sudo apt-key add -
+          sudo curl -s --compressed -o /etc/apt/sources.list.d/td-debs.list "https://tada-team.github.io/ppa/td-debs.list"
+          sudo apt-get update
+          sudo apt-get install -y td-libnice-dev td-libwebsockets-dev td-libsrtp-dev
+          sudo dpkg -i td-janus_{{env.version}}.deb
       - name: Install SSH Client
         uses: webfactory/ssh-agent@v0.4.1
         with:
