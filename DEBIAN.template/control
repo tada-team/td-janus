@@ -1,0 +1,9 @@
+Package: td-janus
+Version: %VERSION%
+Maintainer: Tada.team <info@tada.team>
+Architecture: all
+Section: devel
+Description: custom janus build
+Depends: td-libwebsockets-dev,
+ td-libnice-dev,
+ td-libsrtp-dev

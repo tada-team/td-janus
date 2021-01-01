@@ -1,0 +1,50 @@
+name: build
+env:
+  version: '0.10.8'
+  janusHome: '/opt/tada-janus'
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Prepare template
+        run: |
+          mkdir -p td-janus_${{env.version}}
+          cp -rv DEBIAN.template td-janus_${{env.version}}/DEBIAN
+          sed -i "s/%VERSION%/${{env.version}}/g" td-janus_${{env.version}}/DEBIAN/*
+          sed -i "s/%JANUS_HOME%/${{env.janusHome}}/g" td-janus_${{env.version}}/DEBIAN/*
+      - name: Download janus
+        run: |
+          mkdir -p td-janus_${{env.version}}/usr/local/src
+          cd td-janus_${{env.version}}/usr/local/src
+          curl -L -o vips-${{env.version}}.tar.gz https://github.com/libvips/libvips/releases/download/v${{env.version}}/vips-${{env.version}}.tar.gz
+          tar zvxf vips-${{env.version}}.tar.gz
+          rm vips-${{env.version}}.tar.gz
+      - name: Build .deb
+        run: |
+          dpkg-deb --build td-janus_${{env.version}}
+          mkdir -p dist
+          mv td-janus_${{env.version}}.deb dist
+          ls -lah dist
+      - name: Install SSH Client
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          REPOSITORY_NAME: tada-team/tada-team.github.io
+          TARGET_FOLDER: td-janus-dist
+          FOLDER: dist
+          SSH: true
+          BRANCH: main
