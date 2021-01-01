@@ -59,7 +59,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          REPOSITORY_NAME: tada-team/tada-team.github.io
+          REPOSITORY_NAME: tada-team/ppa
           TARGET_FOLDER: td-janus-dist
           FOLDER: dist
           SSH: true
