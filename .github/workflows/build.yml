@@ -19,11 +19,10 @@ jobs:
           fetch-depth: 1
       - name: Prepare template
         run: |
-          set -ex
           mkdir -p td-janus_${{env.version}}
           cp -rv DEBIAN.template td-janus_${{env.version}}/DEBIAN
           sed -i 's/%VERSION%/${{env.version}}/g' td-janus_${{env.version}}/DEBIAN/*
-          sed -i 's/%JANUS_HOME%/${{env.janusHome}}/g' td-janus_${{env.version}}/DEBIAN/*
+          sed -i 's,%JANUS_HOME%,${{env.janusHome}},g' td-janus_${{env.version}}/DEBIAN/*
       - name: Download janus
         run: |
           mkdir -p td-janus_${{env.version}}/usr/local/src
