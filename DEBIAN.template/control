@@ -7,6 +7,6 @@ Description: custom janus build
 Depends: gengetopt,
  libconfig-dev,
  libjansson-dev,
- td-libnice-dev>=0.1.16,
- td-libsrtp-dev>=2.2.0,
- td-libwebsockets-dev>=3.2.0
+ td-libnice-dev,
+ td-libsrtp-dev,
+ td-libwebsockets-dev
