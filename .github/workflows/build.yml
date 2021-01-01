@@ -27,7 +27,7 @@ jobs:
         run: |
           mkdir -p td-janus_${{env.version}}/usr/local/src
           cd td-janus_${{env.version}}/usr/local/src
-          curl -L -o janus-${{env.version}}.tar.gz https://github.com/meetecho/janus-gateway/releases/download/v${{env.version}}/janus-${{env.version}}.tar.gz
+          curl -L -o janus-${{env.version}}.tar.gz https://github.com/meetecho/janus-gateway/archive/v${{env.version}}.tar.gz
           tar zvxf janus-${{env.version}}.tar.gz
           rm janus-${{env.version}}.tar.gz
       - name: Build .deb
