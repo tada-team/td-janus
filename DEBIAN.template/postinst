@@ -2,7 +2,7 @@
 set -ex
 
 ls -lah /usr/local/src/
-cd /usr/local/src/janus-%VERSION%
+cd /usr/local/src/td-janus-%VERSION%
 
 ./autogen.sh
 ./configure \
