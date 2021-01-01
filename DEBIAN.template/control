@@ -4,7 +4,8 @@ Maintainer: Tada.team <info@tada.team>
 Architecture: all
 Section: devel
 Description: custom janus build
-Depends: libconfig-dev,
+Depends: gengetopt,
+ libconfig-dev,
  libjansson-dev,
  td-libwebsockets-dev,
  td-libnice-dev,

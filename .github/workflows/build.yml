@@ -41,7 +41,13 @@ jobs:
           curl -s --compressed https://tada-team.github.io/ppa/KEY.gpg | sudo apt-key add -
           sudo curl -s --compressed -o /etc/apt/sources.list.d/td-debs.list https://tada-team.github.io/ppa/td-debs.list
           sudo apt-get update
-          sudo apt-get install -y libconfig-dev libjansson-dev td-libnice-dev td-libwebsockets-dev td-libsrtp-dev
+          sudo apt-get install -y \
+            gengetopt \
+            libconfig-dev \
+            libjansson-dev \
+            td-libnice-dev \
+            td-libsrtp-dev \
+            td-libwebsockets-dev
       - name: Try install
         working-directory: dist
         run: |
