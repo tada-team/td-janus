@@ -45,6 +45,7 @@ jobs:
             gengetopt \
             libconfig-dev \
             libjansson-dev \
+            libopus-dev \
             td-libnice-dev \
             td-libsrtp-dev \
             td-libwebsockets-dev
