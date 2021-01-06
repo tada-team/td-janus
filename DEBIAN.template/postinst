@@ -4,6 +4,8 @@ set -ex
 ls -lah /usr/local/src/
 cd /usr/local/src/janus-gateway-%VERSION%
 
+JANUS_HOME=/opt/td-janus
+
 ./autogen.sh
 ./configure \
     --disable-data-channels \
@@ -22,7 +24,9 @@ cd /usr/local/src/janus-gateway-%VERSION%
     --disable-rest \
     --disable-sample-event-handler \
     --disable-unix-sockets \
-    --prefix=%JANUS_HOME%
+    --prefix=${JANUS_HOME}
 
 make CFLAGS='-std=c99'
 make install
+
+echo "janus gateway %VERSION% installed to ${JANUS_HOME}"

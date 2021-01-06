@@ -1,5 +1,11 @@
-td-janus (%VERSION%%DEB_VERSION%); urgency=medium
+td-janus (1.0.0+2); urgency=medium
+
+* install folder changed to /opt/td-janus
+
+-- Tada.team <info@tada.team>  Thu, 7 Jan 2021 00:00:00 +0300
+
+td-janus (1.0.0); urgency=medium
 
 * custom janus build
 
--- Tada.team <info@tada.team> Thu, 31 Dec 2020 00:00:00 +0300
+-- Tada.team <info@tada.team>  Thu, 31 Dec 2020 00:00:00 +0300
