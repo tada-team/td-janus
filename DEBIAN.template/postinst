@@ -6,18 +6,22 @@ cd /usr/local/src/janus-gateway-%VERSION%
 
 ./autogen.sh
 ./configure \
+    --disable-data-channels \
     --disable-mqtt \
     --disable-plugin-nosip \
     --disable-plugin-recordplay \
     --disable-plugin-sip \
     --disable-plugin-sipre \
+    --disable-plugin-streaming \
     --disable-plugin-textroom \
+    --disable-plugin-videocall \
+    --disable-plugin-videoroom \
     --disable-plugin-voicemail \
     --disable-rabbitmq \
     --disable-rabbitmq-event-handler \
+    --disable-rest \
     --disable-sample-event-handler \
     --disable-unix-sockets \
-    --disable-rest \
     --prefix=%JANUS_HOME%
 
 make CFLAGS='-std=c99'
