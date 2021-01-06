@@ -1,6 +1,7 @@
 name: build
 env:
   version: '0.10.9'
+  debVersion: '+1'
   janusHome: '/opt/tada-janus'
 
 on:
@@ -19,22 +20,25 @@ jobs:
           fetch-depth: 1
       - name: Prepare template
         run: |
-          mkdir -p td-janus_${{env.version}}
-          cp -rv DEBIAN.template td-janus_${{env.version}}/DEBIAN
-          sed -i 's/%VERSION%/${{env.version}}/g' td-janus_${{env.version}}/DEBIAN/*
-          sed -i 's,%JANUS_HOME%,${{env.janusHome}},g' td-janus_${{env.version}}/DEBIAN/*
+          dest=td-janus_${{env.version}}${{env.debVersion}}
+          mkdir -p ${dest}
+          cp -rv DEBIAN.template ${dest}/DEBIAN
+          sed -i 's/%VERSION%/${{env.version}}/g' ${dest}/DEBIAN/*
+          sed -i 's/%DEB_VERSION%/${{env.debVersion}}/g' ${dest}/DEBIAN/*
+          sed -i 's,%JANUS_HOME%,${{env.janusHome}},g' ${dest}/DEBIAN/*
       - name: Download janus
         run: |
-          mkdir -p td-janus_${{env.version}}/usr/local/src
-          cd td-janus_${{env.version}}/usr/local/src
+          dest=td-janus_${{env.version}}${{env.debVersion}}
+          mkdir -p ${dest}/usr/local/src
+          cd ${dest}/usr/local/src
           curl -L -o janus-${{env.version}}.tar.gz https://github.com/meetecho/janus-gateway/archive/v${{env.version}}.tar.gz
           tar zvxf janus-${{env.version}}.tar.gz
           rm janus-${{env.version}}.tar.gz
       - name: Build .deb
         run: |
-          dpkg-deb --build td-janus_${{env.version}}
+          dpkg-deb --build td-janus_${{env.version}}${{env.debVersion}}
           mkdir -p dist
-          mv td-janus_${{env.version}}.deb dist
+          mv td-janus_${{env.version}}${{env.debVersion}}.deb dist
       - name: Install requirements
         run: |
           curl -s --compressed https://tada-team.github.io/ppa/KEY.gpg | sudo apt-key add -
@@ -51,7 +55,7 @@ jobs:
       - name: Try install
         working-directory: dist
         run: |
-          sudo dpkg -i td-janus_${{env.version}}.deb
+          sudo dpkg -i td-janus_${{env.version}}${{env.debVersion}}.deb
       - name: Install SSH Client
         uses: webfactory/ssh-agent@v0.4.1
         with:

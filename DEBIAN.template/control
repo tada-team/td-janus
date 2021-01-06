@@ -1,5 +1,5 @@
 Package: td-janus
-Version: %VERSION%
+Version: %VERSION%%DEB_VERSION%
 Maintainer: Tada.team <info@tada.team>
 Architecture: all
 Section: devel

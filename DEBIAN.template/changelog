@@ -1,4 +1,4 @@
-td-janus (%VERSION%); urgency=medium
+td-janus (%VERSION%%DEB_VERSION%); urgency=medium
 
 * custom janus build
 
