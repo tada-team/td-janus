@@ -1,7 +1,6 @@
 #!/bin/bash
 set -ex
 
-ls -lah /usr/local/src/
 cd /usr/local/src/janus-gateway-%VERSION%
 
 JANUS_HOME=/opt/td-janus
