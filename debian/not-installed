@@ -1,0 +1,5 @@
+# processed further and shipped in binary package libjs-janus
+usr/share/janus/javascript/janus.js
+
+# processed further and shipped in plaintext and html formats
+usr/share/doc/janus-gateway/README.md

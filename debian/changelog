@@ -1,0 +1,576 @@
+janus (0.10.10-1) unstable; urgency=medium
+
+  * Upgrade version to 0.10.10
+
+ -- igo95862 <igo95862@yandex.ru>  Thu, 23 Apr 2021 14:51:48 +0200
+
+janus (0.10.9-2) experimental; urgency=medium
+
+  * add patch 1004 to support cross-compilation;
+    closes: bug#959929, thanks to Helmut Grohne
+  * unfuzz patch 2005
+  * enable autopkgtests
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 22 Apr 2021 14:51:48 +0200
+
+janus (0.10.9-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * update and unfuzz patches
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 25 Dec 2020 20:11:10 +0100
+
+janus (0.10.8-2) unstable; urgency=medium
+
+  * use brotli compression suffix .brotli
+    (not .br used for language breton)
+  * stop build-depend explicitly on node-terser
+    (obsolete workaround now fixed in uglifyjs.terser)
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 02 Dec 2020 21:56:16 +0100
+
+janus (0.10.8-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * declare compliance with Debian Policy 4.5.1
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 23 Nov 2020 15:27:52 +0100
+
+janus (0.10.7-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * unfuzz patches
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 30 Oct 2020 12:15:47 +0100
+
+janus (0.10.6-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * copyright-check: rewrite to not depend on cdbs scripts
+  * copyright: update coverage
+  * unfuzz patch 1003
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 06 Oct 2020 19:06:54 +0200
+
+janus (0.10.5-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 11 Sep 2020 13:05:53 +0200
+
+janus (0.10.4-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * use debhelper compatibility level 13 (not 12)
+  * unfuzz patch 2001
+  * explicitly avoid installing libtool *.la files
+    (to also inform dh_missing)
+  * include pcap conversion tools with package janus-tools
+  * tell dh_missing about README.md being further processed
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 07 Aug 2020 20:00:30 +0200
+
+janus (0.10.3-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * unfuzz patches, and extend to cover canvas
+  * fix extend patch 1003 to fully cover multiopus and e2etest
+    (no iceServers were applied)
+  * extend patch 1003 to consistently handle variables token apisecret
+  * suppress debhelper warning about omitted file janus.js
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 13 Jul 2020 11:36:08 +0200
+
+janus (0.10.2-1) unstable; urgency=high
+
+  [ upstream ]
+  * new release
+    + Fix sscanf-related security issues
+    (CVE-2020-14033, CVE-2020-14034)
+
+  [ Jonas Smedegaard ]
+  * copyright: update coverage
+  * unfuzz patches
+  * set urgency=high due to CVE fix
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 17 Jun 2020 13:59:18 +0200
+
+janus (0.10.1-1) unstable; urgency=high
+
+  [ upstream ]
+  * new release
+    + fixes security issues in SDP code
+    closes: bug#962680
+    (CVE-2020-13898, CVE-2020-13899, CVE-2020-13900, CVE-2020-13901),
+    thanks to Salvatore Bonaccorso
+
+  [ Jonas Smedegaard ]
+  * unfuzz patches, and extend to cover e2etest
+  * set urgency=high, due to CVE fix
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 12 Jun 2020 10:09:25 +0200
+
+janus (0.10.0-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * drop patch 2002, obsoleted by upstream improved Doxygen support
+  * unfuzz patches
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 02 Jun 2020 18:53:09 +0200
+
+janus (0.9.5-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * build-depend on libpcap0.8-dev
+  * unfuzz patches
+  * update source helper copyright-check
+    to extract metadata from mp4 files
+  * update patches 1003 2003 2006 2007
+    to cover new web page multiopus
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 26 May 2020 17:48:59 +0200
+
+janus (0.9.4-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * fix tighten build-dependency on libsrtp2-dev
+    to versions linked with libnss
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 05 May 2020 13:13:03 +0200
+
+janus (0.9.3-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * use source git branch debian/master (not master)
+  * stop fallback-(build-)depend on libsrtp0-dev
+  * relax to build-depend unversioned on libwebsockets-dev:
+    needed version satisfied even in oldstable
+  * have janus-tools enhance janus
+  * TODO: mention JavaScript module toastr
+  * update patch 2001 to let janus auto-generate DTLS cert
+    (use snakeoil cert only for transport plugins)
+  * add patch 1003 to separate and deduplicate JavaScript configuration;
+    unfuzz patches 2003 2006
+  * update patch 2004 to also adapt usage comment
+  * improve patch 2006 to drop links to Github
+    (not just flatten them: looks odd)
+  * add patch 2007 to use shared janus javascript module
+  * avoid installing janus.js with demos
+  * include JavaScript config files as examples in janus-demos
+  * include GStreamer script as example in janus-tools
+    (not janus-demos);
+    adapt package suggestions and long descriptions
+  * copyright: fix capitalize name
+  * recommend recent libusrsctp1
+  * configure with --enable-mqtt;
+    build-depend on libpaho-mqtt-dev
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 23 Apr 2020 00:59:52 +0200
+
+janus (0.9.2-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+    + fix rare race condition when claiming sessions;
+      closes: bug#954668 (CVE-2020-10577),
+      thanks to Salvatore Bonaccorso
+
+  [ Jonas Smedegaard ]
+  * recommend recent libnice10
+    (beneficial e.g. with backports
+    where inferior version may also be available);
+    closes: bug#954928, thanks to Roberto Guido
+  * fix recommend lua-ansicolors lua-json
+  * add TODO about enabling tests
+  * tighten build-dependency on libmicrohttpd-dev
+  * copyright: extend coverage
+  * unfuzz patches
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 03 Apr 2020 16:40:07 +0200
+
+janus (0.9.1+20200313-1) unstable; urgency=high
+
+  [ upstream ]
+  * development snapshot
+    + Fixed typo in querylogger_parameters (copy/paste error)
+      (CVE-2020-10574)
+    + Fixed double unlock when listing private rooms in AudioBridge
+      (CVE-2020-10573)
+    + Fixes to leaks and race conditions in VoiceMail plugin
+      (CVE-2020-10576)
+    + Several fixes to session management in VideoCall plugin
+      (CVE-2020-10575)
+
+  [ Jonas Smedegaard ]
+  * release with urgency=high due to security-related bugfixes
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 15 Mar 2020 12:06:35 +0100
+
+janus (0.9.1-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release(s)
+
+  [ Jonas Smedegaard ]
+  * set upstream metadata fields:
+    Bug-Database, Bug-Submit, Repository, Repository-Browse
+  * declare compliance with Debian Policy 4.5.0
+  * use debhelper compatibility level 12 (not 10);
+    build-depend on debhelper-compat (not debhelper);
+    use execute_after_dh_install (not override_dh_install)
+  * drop superfluous dh override
+  * stop build-depend on libre-dev
+  * update/unfuzz patches
+  * sync short and long descriptions with upstream man page:
+    + lowercase project name
+    + describe project as server/gateway (not gateway)
+  * configure with --enable-json-logger
+  * add patch 1002 to modernize rollup config
+  * fix add Pre-Depends: ${misc:Pre-Depends} to include systemd hints
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 14 Mar 2020 15:21:24 +0100
+
+janus (0.7.3-2) unstable; urgency=medium
+
+  * Fix install duktape and lua server apps.
+  * Fix install helper tool janus-cfgconv.
+  * Use debhelper compatibility level 10.
+    Stop build-depend on autotools-dev dh-autoreconf dh-systemd.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 16 Jul 2019 00:18:11 -0300
+
+janus (0.7.3-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Declare compliance with Debian Policy 4.4.0.
+  * Unfuzz patches.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 14 Jul 2019 21:04:03 -0300
+
+janus (0.7.2-2) unstable; urgency=medium
+
+  * Release to unstable.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 07 Jul 2019 22:04:13 -0300
+
+janus (0.7.2-1) experimental; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Unfuzz patches.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 05 Jul 2019 10:53:48 -0300
+
+janus (0.6.3-1) experimental; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Fix patch 2001 path to snakeoil private key,
+    and extend to cover all configuration files supporting TLS.
+    Unfuzz patch 2005.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 20 Mar 2019 21:36:43 +0100
+
+janus (0.6.2-1) experimental; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Update copyright info: Track fuzzer corpus licensed BSD-3-clause.
+  * Unfuzz patches.
+  * Optimize JavaScript with uglifyjs.terser (not uglifyjs).
+    Build-depend on uglifyjs.terser node-terser (not uglifyjs.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 06 Mar 2019 20:28:49 +0100
+
+janus (0.6.1-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Update copyright info:
+    + Extend coverage for main upstream author.
+  * Update watch file:
+    + Rewrite usage comment.
+    + Use substitution strings.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 12 Feb 2019 12:25:05 +0100
+
+janus (0.6.0-2) unstable; urgency=medium
+
+  * Build-depend on libusrsctp-dev.
+  * Extend patch 2003 to cover bootbox and webrtc-adapter.
+    Have janus-demos depend on
+    libjs-bootbox libjs-jquery-blockui libjs-webrtc-adapter.
+    Fix stop have janus-doc depend on
+    libjs-bootswatch libjs-jquery-blockui.
+  * Optimize JavaScript better, include map file,
+    and include pre-compressed code.
+    Stop provide JavaScript wuth .umd suffix.
+    Build-depend on brotli pigz.
+    Tighten to build-depend on recent uglifyjs.
+  * Fix limit architecture-independent builds.
+  * Tighten lintian overrides regarding License-Reference.
+  * Update copyright info: Extend coverage of packaging.
+  * Install README, rendered as plaintext and html.
+    Generate documentation unless nodoc requested.
+    Build-depend on pandoc.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 07 Feb 2019 00:25:07 +0100
+
+janus (0.6.0-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Declare compliance with Debian Policy 4.3.0.
+  * Unfuzz patches.
+  * Build-depend on libconfig-dev.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 26 Jan 2019 02:44:47 +0100
+
+janus (0.5.0-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Unfuzz patches.
+  * Drop debug boilerplate from rules file.
+  * Update copyright info:
+    + Use https protocol in format field.
+    + Use semantic newlines.
+    + Extend coverage of packaging.
+  * Wrap and sort control file and debhelper snippets.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 21 Nov 2018 19:42:05 +0100
+
+janus (0.4.5-2) unstable; urgency=medium
+
+  * Fix build JavaScript module in -indep target,
+    and adapt build-dependencies
+    (to succeed build on archs where Nodejs is unavailable).
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 18 Nov 2018 16:53:14 +0100
+
+janus (0.4.5-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Unfuzz patches.
+  * Update TODOs: libjs-jquery-blockui used since 0.2.5-1.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 17 Oct 2018 15:42:29 +0200
+
+janus (0.4.4-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release(s).
+
+  [ Jonas Smedegaard ]
+  * Declare compliance with Debian Policy 4.2.1.
+  * Set Rules-Requires-Root: no.
+  * Unfuzz patches.
+  * Update copyright info: Track Duktape files licensed Expat.
+  * Explicitly configure with --enable-plugin-lua.
+  * Configure with --enable-plugin-duktape.
+  * Configure with --enable-nanomsg.
+    Build-depend on nanomsg-dev.
+  * Configure with --enable-systemd-sockets.
+    Build-depend on libsystemd-dev.
+  * Add patch 2005 to avoid npm.
+  * Add binary package libjs-janus.
+    Configure with --enable-javascript-umd-module.
+    Have janus-demos depend on libjs-janus.
+    Build-depend on rollup node-rollup-plugin-replace uglifyjs.
+  * Add TODO about MQTT plugin.
+  * Add patch 2006 to avoid privacy breach in links to Github.
+  * Fix bug-closure in changelog entry for 0.3.1-1.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 29 Sep 2018 15:51:26 +0200
+
+janus (0.4.2-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release(s).
+
+  [ Jonas Smedegaard ]
+  * Unfuzz patches.
+  * Update package relations: Build-depend on liblua5.3-dev.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 20 Jun 2018 23:43:34 +0200
+
+janus (0.3.1-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release(s).
+
+  [ Cyril Brulebois ]
+  * Refresh 1001_try_enable_docs_by_default.patch (fuzzy).
+  * Refresh 2003_use_packaged_javascript.patch
+  * Fix gpb/gbp typo in watch file.
+  * Drop dpkg-dev from Build-Depends.
+  * Mention --upstream-vcs-tag=vX.Y.Z in watch file.
+
+  [ Jonas Smedegaard ]
+  * Update Vcs-* fields: Source hosted at Salsa.debian.org now.
+  * Use https protocol in Homepage URL.
+  * Declare compliance with Debian Policy 4.1.4.
+  * Update copyright info: Extend coverage for main upstream author.
+  * Unfuzz patches 1001 2001.
+  * Add patch 2002 to tolerate recent doxygen.
+  * Add patch 2004 to avoid privacy breach of hardcoded default STUN
+    server.
+    Closes: Bug#867310. Thanks to Johannes Schauer.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 07 May 2018 13:54:27 +0200
+
+janus (0.2.6-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Declare compliance with Debian Policy 4.1.2.
+  * Refresh and extend patches.
+  * Update package relations: Build-depend on libre-dev.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 20 Dec 2017 22:44:19 +0100
+
+janus (0.2.5-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Unfuzz patches.
+  * Extend patch 2003 to cover jquery.blockUI.
+    Have janus-doc depend on libjs-jquery-blockui.
+  * Add Vcs-Git and Vcs-Browser fields to control file.
+  * Declare compliance with Debian Policy 4.1.1.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 28 Oct 2017 03:19:34 +0200
+
+janus (0.2.4-2) unstable; urgency=medium
+
+  * Declare compliance with Debian Policy 4.0.0.
+  * Update package relations:
+    + Relax to build-depend unversioned on debhelper dpkg-dev: Needed
+      versions satisfied even in oldstable.
+    + Stop explicitly depend on lsb-base sysvinit-utils: Core packages,
+      and needed versions satisfied even in oldstable.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 28 Jul 2017 13:38:53 -0400
+
+janus (0.2.4-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Unfuzz patches.
+  * Advertise DEP3 format in patch headers.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 28 Jul 2017 12:35:16 -0400
+
+janus (0.2.3-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Fix have janus-demos suggest gstreamer1.0-x.
+  * Fix and modernize SysV init script.
+    Recommend recent sysvinit-utils.
+  * Stop work around wrongly installed headers: Fixed upstream.
+  * Build-depend on libsrtp2-dev for all archs, with libsrtp0-dev as
+    fallback (not only on libsrtp0-dev for some archs).
+  * Stop repackage upstream tarball: No longer includes non-free
+    embedded ICC profile.
+  * Update copyright info: Extend coverage for main upstream author.
+  * Drop all patches cherrypicked upstream: Now applied.
+  * Drop patch 2002: Fixed upstream.
+  * Unfuzz patches 1001 1003.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 12 Jun 2017 17:22:48 +0200
+
+janus (0.2.2+dfsg-4) unstable; urgency=medium
+
+  * Fix patch 1001.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 16 Mar 2017 13:52:27 +0100
+
+janus (0.2.2+dfsg-3) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * Fix typo in janus-demos short description.
+    Thanks to Lorenzo Miniero.
+
+  [ Jonas Smedegaard ]
+  * Build-depend on libsrtp0-dev on archs not yet supported by
+    libsrtp2-dev.
+  * Add patch 1001 to try build documentation by default.
+  * Stop explicitly enable documentation.
+    Revert to build-depend-indep (not build-depend) on doxygen graphviz.
+    See bug#857853.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 16 Mar 2017 12:45:57 +0100
+
+janus (0.2.2+dfsg-2) unstable; urgency=medium
+
+  * Fix build-depend (not build-depend-indep, for now) on doxygen
+    graphviz.
+    Closes: Bug#857853. Thanks to Adrian Bunk.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 16 Mar 2017 01:03:15 +0100
+
+janus (0.2.2+dfsg-1) unstable; urgency=medium
+
+  [ Jonas Smedegaard & Victor Seva ]
+  * Initial package.
+    Closes: Bug#849059.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 14 Mar 2017 12:40:48 +0100

@@ -1,12 +1,13 @@
+---
 name: build
 env:
-  version: '0.10.9'
-  debVersion: '+2'
+  VERSION: '0.10.10'
+  EPOCH: '1'
+  SOURCE_URL: 'https://github.com/meetecho/janus-gateway/archive/refs/tags/v0.10.10.tar.gz'
 
 on:
   push:
-    branches: [ main ]
-
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -17,52 +18,69 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: Prepare template
+      - name: Download source code
         run: |
-          dest=td-janus_${{env.version}}${{env.debVersion}}
-          mkdir -p ${dest}
-          cp -rv DEBIAN.template ${dest}/DEBIAN
-          sed -i 's/%VERSION%/${{env.version}}/g' ${dest}/DEBIAN/*
-          sed -i 's/%DEB_VERSION%/${{env.debVersion}}/g' ${dest}/DEBIAN/*
-      - name: Download janus
+          wget "$SOURCE_URL" --output-document "janus_${VERSION}.orig.tar.gz"
+      - name: Verify source archive
         run: |
-          dest=td-janus_${{env.version}}${{env.debVersion}}
-          mkdir -p ${dest}/usr/local/src
-          cd ${dest}/usr/local/src
-          curl -L -o janus-${{env.version}}.tar.gz https://github.com/meetecho/janus-gateway/archive/v${{env.version}}.tar.gz
-          tar zvxf janus-${{env.version}}.tar.gz
-          rm janus-${{env.version}}.tar.gz
-      - name: Build .deb
+          sha512sum --check ./sha512sums.txt
+      - name: Create debian archive
         run: |
-          dpkg-deb --build td-janus_${{env.version}}${{env.debVersion}}
-          mkdir -p dist
-          mv td-janus_${{env.version}}${{env.debVersion}}.deb dist
-      - name: Install requirements
+          tar --auto-compress --create --file "janus_${VERSION}-${EPOCH}.debian.tar.xz" ./debian
+      - name: Create build directories
         run: |
-          curl -s --compressed https://tada-team.github.io/ppa/KEY.gpg | sudo apt-key add -
-          sudo curl -s --compressed -o /etc/apt/sources.list.d/td-debs.list https://tada-team.github.io/ppa/td-debs.list
-          sudo apt-get update
-          sudo apt-get install -y \
-            gengetopt \
-            libconfig-dev \
-            libjansson-dev \
-            libopus-dev \
-            td-libnice-dev \
-            td-libsrtp-dev \
-            td-libwebsockets-dev
+          DSC_FILE="janus_${VERSION}-${EPOCH}.dsc"
+          dpkg-source --no-check --extract "$DSC_FILE" ./build_amd64
+          dpkg-source --no-check --extract "$DSC_FILE" ./build_arm64
+      - name: Add ARM64 architecture
+        run: |
+          sudo dpkg --add-architecture arm64
+      - name: Add tdproto PPA
+        run : |
+          curl --compressed https://tada-team.github.io/ppa/KEY.gpg | sudo apt-key add -
+          sudo curl --compressed -o /etc/apt/sources.list.d/td-debs.list https://tada-team.github.io/ppa/td-debs.list
+      - name: Update sources.list
+        run: |
+          cat ./bionic-sources.txt | sudo tee /etc/apt/sources.list
+      - name: Update package list
+        run: |
+          sudo apt update
+      - name: Install build tools
+        run: |
+          sudo apt install --yes binutils-aarch64-linux-gnu build-essential \
+            crossbuild-essential-arm64 devscripts debhelper
+      - name: Install AMD64 build dependencies
+        run: |
+          sudo apt install --yes $(cat ./amd64_dependencies.txt)
+      - name: Build AMD64
+        run: |
+          cd ./build_amd64
+          debuild --unsigned-source --unsigned-buildinfo --unsigned-changes
       - name: Try install
-        working-directory: dist
         run: |
-          sudo dpkg -i td-janus_${{env.version}}${{env.debVersion}}.deb
+          sudo dpkg --install ./*amd64.deb
+      - name: Install ARM64 dependencies
+        run: |
+          sudo apt install --yes $(cat ./arm64_dependencies.txt)
+      - name: Build ARM64
+        run: |
+          cd ./build_arm64
+          debuild --host-arch arm64 \
+            --unsigned-source --unsigned-buildinfo --unsigned-changes
+      - name: Copy built packages
+        run: |
+          mkdir dist
+          mv ./td-libvips*.deb ./dist
       - name: Install SSH Client
         uses: webfactory/ssh-agent@v0.4.1
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
       - name: Deploy
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           REPOSITORY_NAME: tada-team/ppa
-          TARGET_FOLDER: td-janus-dist
+          TARGET_FOLDER: td-libvips-dev-dist
           FOLDER: dist
           SSH: true
           BRANCH: main

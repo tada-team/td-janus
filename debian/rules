@@ -1,0 +1,39 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+# avoid installing libtool *.la files
+export DH_OPTIONS = --exclude=.la
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	dh_auto_install --destdir debian/tmp
+
+override_dh_shlibdeps:
+	dh_shlibdeps $@ -- --ignore-missing-info 
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		--disable-data-channels \
+		--disable-mqtt \
+		--disable-plugin-nosip \
+		--disable-plugin-recordplay \
+		--disable-plugin-sip \
+		--disable-plugin-sipre \
+		--disable-plugin-streaming \
+		--disable-plugin-textroom \
+		--disable-plugin-videocall \
+		--disable-plugin-videoroom \
+		--disable-plugin-voicemail \
+		--disable-rabbitmq \
+		--disable-rabbitmq-event-handler \
+		--disable-rest \
+		--disable-sample-event-handler \
+		--disable-unix-sockets \
+		--prefix=/opt/td-janus
+
+.SECONDARY:
