@@ -70,7 +70,7 @@ jobs:
       - name: Copy built packages
         run: |
           mkdir dist
-          mv ./td-libvips*.deb ./dist
+          mv ./td-janus*.deb ./dist
       - name: Install SSH Client
         uses: webfactory/ssh-agent@v0.4.1
         with:

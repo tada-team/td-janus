@@ -21,7 +21,7 @@ Vcs-Browser: https://salsa.debian.org/pkg-voip-team/janus
 Homepage: https://janus.conf.meetecho.com
 Rules-Requires-Root: no
 
-Package: janus
+Package: td-janus
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
 Depends:
