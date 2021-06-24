@@ -1,0 +1,25 @@
+From 56c1c00fb99e72524a9a322c4b3dfcbefd0145e5 Mon Sep 17 00:00:00 2001
+From: igo95862 <igo95862@yandex.ru>
+Date: Thu, 24 Jun 2021 17:13:30 +0300
+Subject: [PATCH] makefile: Use PKG_CONFIG variable to call system dependent
+ pkg-config
+
+Fixes cross-compilation on Debian and seems to not break
+compilation on Arch Linux
+---
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 576c2c17f..50879e6f8 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -208,7 +208,7 @@ version.c: FORCE | $(dir_target)
+ 	echo "$(build_date)" | awk 'BEGIN {} {print "const char *janus_build_git_time = \""$$0"\";"} END {} ' >> version.c
+ 	echo "$(JANUS_VERSION)" | awk 'BEGIN {} {print "int janus_version = "$$0";"} END {} ' >> version.c
+ 	echo "$(JANUS_VERSION_STRING)" | awk 'BEGIN {} {print "const char *janus_version_string = \""$$0"\";"} END {} ' >> version.c
+-	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)" pkg-config --modversion nice | awk 'BEGIN {} {print "const char *libnice_version_string = \""$$0"\";"} END {} ' >> version.c
++	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)" "$(PKG_CONFIG)" --modversion nice | awk 'BEGIN {} {print "const char *libnice_version_string = \""$$0"\";"} END {} ' >> version.c
+ 
+ $(dir_present):
+ 	`which git` rev-parse HEAD | awk 'BEGIN {print "#include \"version.h\""} {print "const char *janus_build_git_sha = \"" $$0"\";"} END {}' > version.c
