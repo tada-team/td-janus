@@ -1,3 +1,9 @@
+janus (0.10.10-2) unstable; urgency=medium
+
+  * Fixees to build
+
+ -- igo95862 <igo95862@yandex.ru>  Thu, 23 Apr 2021 14:52:48 +0200
+
 janus (0.10.10-1) unstable; urgency=medium
 
   * Upgrade version to 0.10.10

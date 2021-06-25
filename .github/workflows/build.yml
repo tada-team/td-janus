@@ -2,7 +2,7 @@
 name: build
 env:
   VERSION: '0.10.10'
-  EPOCH: '1'
+  EPOCH: '2'
   SOURCE_URL: 'https://github.com/meetecho/janus-gateway/archive/refs/tags/v0.10.10.tar.gz'
 
 on:
