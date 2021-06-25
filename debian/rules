@@ -34,6 +34,7 @@ override_dh_auto_configure:
 		--disable-rest \
 		--disable-sample-event-handler \
 		--disable-unix-sockets \
-		--prefix=/opt/td-janus
+		--prefix=/opt/td-janus \
+		--libdir=/opt/td-janus/lib
 
 .SECONDARY:
