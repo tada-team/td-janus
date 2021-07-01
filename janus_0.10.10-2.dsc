@@ -3,13 +3,13 @@ Format: 3.0 (quilt)
 Source: janus
 Binary: janus
 Architecture: any
-Version: 0.10.10-2
+Version: 0.10.10-3
 Maintainer: igo95862 <igo95862@yandex.ru>
 Homepage: https://janus.conf.meetecho.com
 Standards-Version: 4.5.1
 Vcs-Browser: https://salsa.debian.org/pkg-voip-team/janus
 Vcs-Git: https://salsa.debian.org/pkg-voip-team/janus.git
-Build-Depends: debhelper-compat (= 13), gengetopt, libavcodec-dev, libavformat-dev, libavutil-dev, libconfig-dev, libcurl4-openssl-dev, libglib2.0-dev, libjansson-dev, liblua5.3-dev, libmicrohttpd-dev (>= 0.9.59), libnanomsg-dev, libnice-dev, libogg-dev, libopus-dev, libpaho-mqtt-dev, libpcap0.8-dev, librabbitmq-dev, libsofia-sip-ua-dev, libsrtp2-dev (>= 2.3.0-4~), libssl-dev, libsystemd-dev, libusrsctp-dev, libwebsockets-dev, pandoc <!nodoc>, pkg-config, rename
+Build-Depends: debhelper-compat (= 13), gengetopt, libavcodec-dev, libavformat-dev, libavutil-dev, libconfig-dev, libcurl4-openssl-dev, libglib2.0-dev, libjansson-dev, liblua5.3-dev, libmicrohttpd-dev (>= 0.9.59), libnanomsg-dev, libnice-dev, libogg-dev, libopus-dev, libpaho-mqtt-dev, libpcap0.8-dev, librabbitmq-dev, libsofia-sip-ua-dev, libsrtp2-dev (>= 2.3.0-4~), libssl-dev, libsystemd-dev, libusrsctp-dev, libwebsockets-dev, pandoc <!nodoc>, pkg-config, rename, libgupnp-igd-1.0-dev
 Build-Depends-Indep: brotli, doxygen, graphviz, node-rollup-plugin-replace, pigz, rollup, uglifyjs.terser
 Package-List:
  janus deb comm optional arch=any

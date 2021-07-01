@@ -32,7 +32,8 @@ Depends:
  libopus-dev,
  td-libnice-dev,
  td-libsrtp-dev,
- td-libwebsockets-dev
+ td-libwebsockets-dev,
+ libgupnp-igd-1.0-dev
 Description: general purpose WebRTC server/gateway
  janus is a general purpose WebRTC server/gateway
  with a minimal footprint.
