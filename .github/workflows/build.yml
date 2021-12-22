@@ -1,76 +1,33 @@
 ---
 name: build
-env:
-  VERSION: '0.10.10'
-  EPOCH: '3'
-  SOURCE_URL: 'https://github.com/meetecho/janus-gateway/archive/refs/tags/v0.10.10.tar.gz'
 
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: Download source code
+      - name: Build AMD64 image
         run: |
-          wget "$SOURCE_URL" --output-document "janus_${VERSION}.orig.tar.gz"
-      - name: Verify source archive
+          podman build --build-arg=BUILD_ARCH=amd64 -t pkgbuild .
+      - name: Copy built AMD64 packages
         run: |
-          sha512sum --check ./sha512sums.txt
-      - name: Create debian archive
-        run: |
-          tar --auto-compress --create --file "janus_${VERSION}-${EPOCH}.debian.tar.xz" ./debian
-      - name: Create build directories
-        run: |
-          DSC_FILE="janus_${VERSION}-${EPOCH}.dsc"
-          dpkg-source --no-check --extract "$DSC_FILE" ./build_amd64
-          dpkg-source --no-check --extract "$DSC_FILE" ./build_arm64
-      - name: Add ARM64 architecture
-        run: |
-          sudo dpkg --add-architecture arm64
-      - name: Add tdproto PPA
-        run : |
-          curl --compressed https://tada-team.github.io/ppa/KEY.gpg | sudo apt-key add -
-          sudo curl --compressed -o /etc/apt/sources.list.d/td-debs.list https://tada-team.github.io/ppa/td-debs.list
-      - name: Update sources.list
-        run: |
-          cat ./bionic-sources.txt | sudo tee /etc/apt/sources.list
-      - name: Update package list
-        run: |
-          sudo apt update
-      - name: Install build tools
-        run: |
-          sudo apt install --yes binutils-aarch64-linux-gnu build-essential \
-            crossbuild-essential-arm64 devscripts debhelper
-      - name: Install AMD64 build dependencies
-        run: |
-          sudo apt install --yes $(cat ./amd64_dependencies.txt)
-      - name: Build AMD64
-        run: |
-          cd ./build_amd64
-          debuild --unsigned-source --unsigned-buildinfo --unsigned-changes
+          mkdir --parents dist
+          podman run -v ./dist:/mnt -it pkgbuild '/bin/bash' -c '/bin/cp /root/*.deb /mnt'
       - name: Try install
         run: |
-          sudo dpkg --install ./*amd64.deb
-      - name: Install ARM64 dependencies
+          sudo apt install --yes ./dist/*amd64.deb
+      - name: Build ARM64 image
         run: |
-          sudo apt install --yes $(cat ./arm64_dependencies.txt)
-      - name: Build ARM64
+          podman build --build-arg=BUILD_ARCH=arm64 -t pkgbuild .
+      - name: Copy built ARM64 packages
         run: |
-          cd ./build_arm64
-          debuild --host-arch arm64 \
-            --unsigned-source --unsigned-buildinfo --unsigned-changes
-      - name: Copy built packages
-        run: |
-          mkdir dist
-          mv ./td-janus*.deb ./dist
+          mkdir --parents dist
+          podman run -v ./dist:/mnt -it pkgbuild '/bin/bash' -c '/bin/cp /root/*.deb /mnt'
       - name: Install SSH Client
         uses: webfactory/ssh-agent@v0.4.1
         with:

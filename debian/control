@@ -12,9 +12,10 @@ Build-Depends:
  libconfig-dev,
  libjansson-dev,
  libopus-dev,
- td-libnice-dev,
- td-libsrtp-dev,
- td-libwebsockets-dev
+ libnice-dev,
+ libsrtp2-dev,
+ libwebsockets-dev,
+ libgupnp-igd-1.0-dev
 Standards-Version: 4.5.1
 Vcs-Git: https://salsa.debian.org/pkg-voip-team/janus.git
 Vcs-Browser: https://salsa.debian.org/pkg-voip-team/janus
@@ -30,9 +31,9 @@ Depends:
  libconfig-dev,
  libjansson-dev,
  libopus-dev,
- td-libnice-dev,
- td-libsrtp-dev,
- td-libwebsockets-dev,
+ libnice-dev,
+ libsrtp2-dev,
+ libwebsockets-dev,
  libgupnp-igd-1.0-dev
 Description: general purpose WebRTC server/gateway
  janus is a general purpose WebRTC server/gateway

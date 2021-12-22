@@ -1,9 +1,14 @@
+janus (0.10.10-4) unstable; urgency=medium
+
+  * Migrate to Focal
+
+ -- igo95862 <igo95862@yandex.ru>  Thu, 22 Dec 2021 14:52:48 +0200
+
 janus (0.10.10-3) unstable; urgency=medium
 
   * libgupnp requirements
 
  -- igo95862 <igo95862@yandex.ru>  Thu, 1 July 2021 14:52:48 +0200
-
 
 janus (0.10.10-2) unstable; urgency=medium
 

@@ -1,1 +1,0 @@
-gengetopt libconfig-dev libjansson-dev libopus-dev td-libnice-dev td-libsrtp-dev td-libwebsockets-dev libglib2.0-dev libgupnp-igd-1.0-dev
