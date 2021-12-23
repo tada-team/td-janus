@@ -1,0 +1,11 @@
+libsrtp (2.3.0-3) unstable; urgency=medium
+
+  * Rebase on Ubuntu 20.04
+
+ -- Tada.team <info@tada.team>  Thu, 31 Dec 2020 00:00:00 +0300
+
+libsrtp (2.3.0-2) unstable; urgency=medium
+
+  * custom libsrtp build
+
+ -- Tada.team <info@tada.team>  Thu, 31 Dec 2020 00:00:00 +0300

@@ -1,0 +1,19 @@
+Source: libsrtp
+Section: devel
+Priority: optional
+Maintainer: Tada.team <info@tada.team>
+Build-Depends:
+ debhelper-compat (= 11),
+ libssl-dev,
+ pkg-config
+Standards-Version: 4.5.1
+Rules-Requires-Root: no
+
+Package: td-libsrtp-dev
+Architecture: any
+Section: devel
+Description: custom libsrtp build
+Conflicts: libsrtp-dev
+Depends: 
+ ${misc:Depends},
+ libssl-dev

@@ -1,0 +1,89 @@
+From 9e330498245999d0e9e4a295359bdd9583b9b8b8 Mon Sep 17 00:00:00 2001
+From: Yann Droneaud <ydroneaud@opteya.com>
+Date: Mon, 15 Jun 2020 17:30:21 +0200
+Subject: [PATCH] configure: check OPENSSL_cleanse() only when not cross
+ compiling
+
+As reported in #479, testing for OPENSSL_cleanse()
+behavior within ./configure cannot happen when used
+in cross compilation environment.
+
+And autoconf -Wall reminds us about this issue:
+
+configure.ac:267: warning: AC_RUN_IFELSE called without default to allow cross compiling
+../../lib/autoconf/general.m4:2759: AC_RUN_IFELSE is expanded from...
+configure.ac:267: the top level
+configure.ac:267: warning: AC_RUN_IFELSE called without default to allow cross compiling
+../../lib/autoconf/general.m4:2759: AC_RUN_IFELSE is expanded from...
+configure.ac:267: the top level
+
+If cross-compiling, OPENSSL_cleanse() behavior cannot
+be validated, and should be considered broken.
+---
+ configure    | 19 +++++++++----------
+ configure.ac |  6 +++---
+ 2 files changed, 12 insertions(+), 13 deletions(-)
+
+diff --git a/configure b/configure
+index 406e7809..b55f38de 100755
+--- a/configure
++++ b/configure
+@@ -5900,10 +5900,7 @@ $as_echo "#define OPENSSL 1" >>confdefs.h
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if OPENSSL_cleanse is broken" >&5
+ $as_echo_n "checking if OPENSSL_cleanse is broken... " >&6; }
+    if test "$cross_compiling" = yes; then :
+-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "cannot run test program while cross compiling
+-See \`config.log' for more details" "$LINENO" 5; }
++  openssl_cleanse_broken=maybe
+ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+@@ -5937,12 +5934,7 @@ _ACEOF
+ if ac_fn_c_try_run "$LINENO"; then :
+   openssl_cleanse_broken=no
+ else
+-
+-     openssl_cleanse_broken=yes
+-
+-$as_echo "#define OPENSSL_CLEANSE_BROKEN 1" >>confdefs.h
+-
+-
++  openssl_cleanse_broken=yes
+ fi
+ rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+   conftest.$ac_objext conftest.beam conftest.$ac_ext
+@@ -5950,6 +5942,13 @@ fi
+ 
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $openssl_cleanse_broken" >&5
+ $as_echo "$openssl_cleanse_broken" >&6; }
++   if test "x$openssl_cleanse_broken" != "xno"; then :
++
++
++$as_echo "#define OPENSSL_CLEANSE_BROKEN 1" >>confdefs.h
++
++
++fi
+ 
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to leverage OpenSSL KDF algorithm" >&5
+ $as_echo_n "checking whether to leverage OpenSSL KDF algorithm... " >&6; }
+diff --git a/configure.ac b/configure.ac
+index f87cf116..4df9eb27 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -282,11 +282,11 @@ if test "$enable_openssl" = "yes"; then
+          return 1;
+        }
+      }
+-   ])], [openssl_cleanse_broken=no], [
+-     openssl_cleanse_broken=yes
++   ])], [openssl_cleanse_broken=no], [openssl_cleanse_broken=yes], [openssl_cleanse_broken=maybe])
++   AC_MSG_RESULT([$openssl_cleanse_broken])
++   AS_IF([test "x$openssl_cleanse_broken" != "xno"], [
+      AC_DEFINE([OPENSSL_CLEANSE_BROKEN], [1], [Define this if OPENSSL_cleanse is broken.])
+    ])
+-   AC_MSG_RESULT([$openssl_cleanse_broken])
+ 
+    AC_MSG_CHECKING([whether to leverage OpenSSL KDF algorithm])
+    AC_ARG_ENABLE([openssl-kdf],

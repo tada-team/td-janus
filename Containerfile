@@ -9,19 +9,39 @@ RUN echo "force-unsafe-io" >> "/etc/dpkg/dpkg.cfg" && \
     DEBIAN_FRONTEND=noninteractive apt install --yes \
         build-essential devscripts debhelper equivs wget
 
-ARG VERSION="0.10.10"
+ARG LIBSRTP_VERSION="2.3.0"
+ARG JANUS_VERSION="0.10.10"
 WORKDIR /root
-RUN wget "https://github.com/meetecho/janus-gateway/archive/refs/tags/v${VERSION}.tar.gz" \
-        --output-document "janus_${VERSION}.orig.tar.gz" && \
+RUN wget "https://github.com/cisco/libsrtp/archive/refs/tags/v${LIBSRTP_VERSION}.tar.gz" \
+        --output-document "libsrtp_${LIBSRTP_VERSION}.orig.tar.gz" && \
+    wget "https://github.com/meetecho/janus-gateway/archive/refs/tags/v${JANUS_VERSION}.tar.gz" \
+        --output-document "janus_${JANUS_VERSION}.orig.tar.gz" && \
     sha512sum --check /root/sha512sums.txt && \
-    mkdir build && \
-    tar --strip-components=1 --directory=build \
-        --extract --file "janus_${VERSION}.orig.tar.gz"
+    mkdir build-janus build-libsrtp && \
+    tar --strip-components=1 --directory=build-janus \
+        --extract --file "janus_${JANUS_VERSION}.orig.tar.gz" && \
+    tar --strip-components=1 --directory=build-libsrtp \
+        --extract --file "libsrtp_${LIBSRTP_VERSION}.orig.tar.gz"
 
-COPY debian /root/build/debian
+COPY libsrtp-debian /root/build-libsrtp/debian
+COPY janus-debian /root/build-janus/debian
 
-WORKDIR /root/build
 ARG BUILD_ARCH="arm64"
+
+WORKDIR /root/build-libsrtp
+RUN DEBIAN_FRONTEND=noninteractive \
+    mk-build-deps \
+    --tool 'apt --yes -o Debug::pkgProblemResolver=yes --no-install-recommends' \
+    --host-arch "${BUILD_ARCH}" debian/control \
+    --install --remove
+RUN dpkg-buildpackage --host-arch "${BUILD_ARCH}" --unsigned-source --unsigned-buildinfo --unsigned-changes
+
+WORKDIR /root
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt install --yes --no-install-recommends \
+    ./*.deb
+
+WORKDIR /root/build-janus
 RUN DEBIAN_FRONTEND=noninteractive \
     mk-build-deps \
     --tool 'apt --yes -o Debug::pkgProblemResolver=yes --no-install-recommends' \
